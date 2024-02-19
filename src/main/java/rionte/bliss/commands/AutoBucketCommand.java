@@ -11,6 +11,7 @@ import rionte.bliss.listeners;
 public class AutoBucketCommand extends CommandBase {
 
 	public static boolean active = false;
+	Minecraft mc = Minecraft.getMinecraft();
 	
 	@Override
 	public int getRequiredPermissionLevel() {

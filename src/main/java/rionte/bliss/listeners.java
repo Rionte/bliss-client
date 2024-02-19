@@ -27,6 +27,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import rionte.bliss.commands.AirJumpCommand;
 import rionte.bliss.commands.JumpResetCommand;
+import rionte.bliss.commands.KillauraCommand;
 import rionte.bliss.commands.AutoBucketCommand;
 
 public class listeners {
@@ -34,8 +35,12 @@ public class listeners {
 	public static String prefix = EnumChatFormatting.AQUA + "[BLI" +  EnumChatFormatting.WHITE + "SS] ";
 	public static int totalTicks = 0;
 	public static int totalSeconds = 0;
-	private static Minecraft mc = Minecraft.getMinecraft();
-	
+	boolean bucketBuffer = true;
+	static Minecraft mc = Minecraft.getMinecraft();
+	int bucketSlot = 10;
+	int stopBucketTick = 0;
+	Entity killauraTarget;
+
 	public static void gameprint(String s) {
 		mc.thePlayer.addChatMessage(new ChatComponentText(s));
 	}
@@ -48,8 +53,37 @@ public class listeners {
 		}
 		
 		if (totalTicks % 80 == 0) {
-			gameprint(mc.thePlayer.inventory.getStackInSlot(1).toString());
 			totalSeconds += 1;
+			/* if (AutoBucketCommand.active) {
+				for (int i = 0; i < 9; i++) {
+					try {
+						if (mc.thePlayer.inventory.getStackInSlot(i).getItem() == Item.getByNameOrId("water_bucket")) {
+							bucketSlot = i;
+						}
+					} catch (NullPointerException e) {
+						continue;
+					}
+				}
+			} */
+			
+			if (KillauraCommand.active) {
+				killauraTarget = mc.theWorld.getEntitiesWithinAABB(mc.thePlayer.getClass(), 3);
+			}
+		}
+		
+		if (KillauraCommand.active) {
+			mc.thePlayer.attackTargetEntityWithCurrentItem();
+		}
+		
+		if (mc.thePlayer.onGround) {
+			bucketBuffer = true;
+			if (AutoBucketCommand.active) {
+				stopBucketTick = totalTicks;
+			}
+		}
+		
+		if (totalTicks - stopBucketTick == 40) {
+			KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), false);
 		}
 		
 		if (AirJumpCommand.active) {
@@ -64,10 +98,16 @@ public class listeners {
 			}
 		}
 		
-		/* if (AutoBucketCommand.active) {
+		if (AutoBucketCommand.active) {
 			if (mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posZ)).getBlock() == Blocks.air && mc.theWorld.getBlockState(new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 2, mc.thePlayer.posZ)).getBlock() != Blocks.air) {
+				if (bucketBuffer) {
+					bucketBuffer = false;
+					mc.thePlayer.inventory.currentItem = bucketSlot;
+					mc.thePlayer.setItemInUse(mc.thePlayer.inventory.getStackInSlot(bucketSlot), 1);
+					KeyBinding.setKeyBindState(mc.gameSettings.keyBindUseItem.getKeyCode(), true);
+				}
 			}
-		} */
+		}
 		
 		totalTicks += 1;
 	}

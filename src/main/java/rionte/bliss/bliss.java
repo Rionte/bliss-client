@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import rionte.bliss.commands.AirJumpCommand;
 import rionte.bliss.commands.AutoBucketCommand;
 import rionte.bliss.commands.JumpResetCommand;
+import rionte.bliss.commands.KillauraCommand;
 
 @Mod(modid = reference.MODID, name = reference.NAME, version = reference.VERSION)
 public class bliss {
@@ -27,6 +28,7 @@ public class bliss {
 		ClientCommandHandler.instance.registerCommand(new JumpResetCommand());
 		ClientCommandHandler.instance.registerCommand(new AirJumpCommand());
 		ClientCommandHandler.instance.registerCommand(new AutoBucketCommand());
+		ClientCommandHandler.instance.registerCommand(new KillauraCommand());
 		MinecraftForge.EVENT_BUS.register(new listeners());
 	}
 

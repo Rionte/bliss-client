@@ -8,10 +8,9 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import rionte.bliss.listeners;
 
-public class AirJumpCommand extends CommandBase {
+public class KillauraCommand extends CommandBase {
 
 	public static boolean active = false;
-	public static boolean airstrafe = false;
 	
 	@Override
 	public int getRequiredPermissionLevel() {
@@ -25,7 +24,7 @@ public class AirJumpCommand extends CommandBase {
 	
 	@Override
 	public String getCommandName() {
-		return "airjump";
+		return "killaura";
 	}
 
 	@Override
@@ -38,19 +37,19 @@ public class AirJumpCommand extends CommandBase {
 		if (args.length == 0) {
 			active = !active;
 			if (active) {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(listeners.prefix + EnumChatFormatting.GREEN + "Air Jump Activated"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(listeners.prefix + EnumChatFormatting.GREEN + "Killaura Activated"));
 			} else {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(listeners.prefix + EnumChatFormatting.RED + "Air Jump Deactivated"));
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(listeners.prefix + EnumChatFormatting.RED + "Killaura Deactivated"));
 			}
 		} else {
-			if (args[0].equalsIgnoreCase("airstrafe")) {
+			/* if (args[0].equalsIgnoreCase("airstrafe")) {
 				airstrafe = !airstrafe;
 				if (airstrafe) {
 					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(listeners.prefix + EnumChatFormatting.GREEN + "Air Strafe Activated"));
 				} else {
 					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(listeners.prefix + EnumChatFormatting.RED + "Air Strafe Deactivated"));
 				}
-			}
+			} */
 		}
 	}
 	
