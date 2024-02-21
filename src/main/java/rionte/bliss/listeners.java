@@ -1,4 +1,6 @@
 package rionte.bliss;
+import java.util.List;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -6,15 +8,26 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.client.C01PacketChatMessage;
+import net.minecraft.network.play.client.C03PacketPlayer;
+import net.minecraft.network.play.client.C03PacketPlayer.C05PacketPlayerLook;
+import net.minecraft.network.play.client.C07PacketPlayerDigging;
+import net.minecraft.network.play.client.C07PacketPlayerDigging.Action;
+import net.minecraft.network.play.server.S19PacketEntityHeadLook;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.util.Vector3d;
 import net.minecraftforge.client.event.GuiScreenEvent.KeyboardInputEvent;
 import net.minecraftforge.event.entity.EntityEvent;
@@ -66,13 +79,39 @@ public class listeners {
 				}
 			} */
 			
+			BlockPos playerPos = mc.thePlayer.getPosition();
+			int playerX = playerPos.getX();
+			int playerY = playerPos.getY();
+			int playerZ = playerPos.getZ();
+			
 			if (KillauraCommand.active) {
-				killauraTarget = mc.theWorld.getEntitiesWithinAABB(mc.thePlayer.getClass(), 3);
+				killauraTarget = mc.theWorld.findNearestEntityWithinAABB(EntityLivingBase.class, new AxisAlignedBB(playerX - KillauraCommand.reach, playerY - KillauraCommand.reach, playerZ - KillauraCommand.reach, playerX + KillauraCommand.reach, playerY + KillauraCommand.reach, playerZ + KillauraCommand.reach), mc.thePlayer);
+			} else {
+				killauraTarget = null;
 			}
 		}
 		
-		if (KillauraCommand.active) {
-			mc.thePlayer.attackTargetEntityWithCurrentItem();
+		float beforePitch = mc.thePlayer.rotationPitch;
+		
+		if (totalTicks % 40 == 0) {
+			if (killauraTarget instanceof Entity) {
+				Vec3 playerPos = mc.thePlayer.getPositionEyes(1.0f);
+	            Vec3 targetPos = killauraTarget.getPositionEyes(1.0f);
+	            double deltaX = targetPos.xCoord - playerPos.xCoord;
+	            double deltaY = targetPos.yCoord - playerPos.yCoord;
+	            double deltaZ = targetPos.zCoord - playerPos.zCoord;
+	            double horizontalDistance = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
+	            float yaw = (float) Math.toDegrees(Math.atan2(-deltaX, deltaZ));
+	            float pitch = (float) Math.toDegrees(Math.atan2(-deltaY, horizontalDistance));
+	            mc.thePlayer.rotationPitch = pitch;
+	            mc.thePlayer.setRotationYawHead(yaw);
+	            KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), true);
+			}
+		}
+		
+		if (totalTicks % 50 == 0) {
+			mc.thePlayer.rotationPitch = beforePitch;
+            KeyBinding.setKeyBindState(mc.gameSettings.keyBindAttack.getKeyCode(), false);
 		}
 		
 		if (mc.thePlayer.onGround) {

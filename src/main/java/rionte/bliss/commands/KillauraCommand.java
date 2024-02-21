@@ -11,6 +11,7 @@ import rionte.bliss.listeners;
 public class KillauraCommand extends CommandBase {
 
 	public static boolean active = false;
+	public static double reach = 3;
 	
 	@Override
 	public int getRequiredPermissionLevel() {
@@ -42,14 +43,10 @@ public class KillauraCommand extends CommandBase {
 				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(listeners.prefix + EnumChatFormatting.RED + "Killaura Deactivated"));
 			}
 		} else {
-			/* if (args[0].equalsIgnoreCase("airstrafe")) {
-				airstrafe = !airstrafe;
-				if (airstrafe) {
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(listeners.prefix + EnumChatFormatting.GREEN + "Air Strafe Activated"));
-				} else {
-					Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(listeners.prefix + EnumChatFormatting.RED + "Air Strafe Deactivated"));
-				}
-			} */
+			if (args[0].equalsIgnoreCase("reach")) {
+				reach = Double.valueOf(args[1]);
+				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(listeners.prefix + EnumChatFormatting.GREEN + "Reach Set To " + EnumChatFormatting.YELLOW + reach));
+			}
 		}
 	}
 	
