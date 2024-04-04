@@ -25,7 +25,7 @@ import rionte.bliss.commands.AnticheatCommand;
 
 public class listeners {
 	
-	public static String prefix = EnumChatFormatting.DARK_AQUA + "[" +  EnumChatFormatting.AQUA + "R" + EnumChatFormatting.DARK_AQUA + "] " +  EnumChatFormatting.WHITE;
+	public static String prefix = EnumChatFormatting.DARK_AQUA + "[" +  EnumChatFormatting.AQUA + "B" + EnumChatFormatting.DARK_AQUA + "] " +  EnumChatFormatting.WHITE;
 	public static int totalTicks = 0;
 	static Minecraft mc = Minecraft.getMinecraft();
 	
