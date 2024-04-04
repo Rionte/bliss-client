@@ -4,13 +4,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 import rionte.bliss.listeners;
 
-public class JumpResetCommand extends CommandBase {
+public class SaveCommand extends CommandBase {
 
 	public static boolean active = false;
+	static Minecraft mc = Minecraft.getMinecraft();
 	
 	@Override
 	public int getRequiredPermissionLevel() {
@@ -24,7 +23,7 @@ public class JumpResetCommand extends CommandBase {
 	
 	@Override
 	public String getCommandName() {
-		return "jumpreset";
+		return "sv";
 	}
 
 	@Override
@@ -34,12 +33,7 @@ public class JumpResetCommand extends CommandBase {
 
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-		active = !active;
-		if (active) {
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(listeners.prefix + EnumChatFormatting.GREEN + "Jump Reset Activated"));
-		} else {
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(listeners.prefix + EnumChatFormatting.RED + "Jump Reset Deactivated"));
-		}
+		mc.thePlayer.sendChatMessage(".cfg save " + SwapCommand.current);
+		listeners.gameprint(listeners.prefix + "Saved config \"" + SwapCommand.current + "\"!");
 	}
-	
 }

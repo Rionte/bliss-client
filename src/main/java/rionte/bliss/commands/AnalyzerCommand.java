@@ -4,14 +4,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import rionte.bliss.listeners;
 
-public class KillauraCommand extends CommandBase {
+public class AnalyzerCommand extends CommandBase {
 
 	public static boolean active = false;
-	public static double reach = 3;
+	public static int delay = 200;
+	static Minecraft mc = Minecraft.getMinecraft();
 	
 	@Override
 	public int getRequiredPermissionLevel() {
@@ -25,7 +25,7 @@ public class KillauraCommand extends CommandBase {
 	
 	@Override
 	public String getCommandName() {
-		return "killaura";
+		return "a";
 	}
 
 	@Override
@@ -38,16 +38,21 @@ public class KillauraCommand extends CommandBase {
 		if (args.length == 0) {
 			active = !active;
 			if (active) {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(listeners.prefix + EnumChatFormatting.GREEN + "Killaura Activated"));
+				listeners.toDisplay.put("analyzer", String.valueOf(delay));
+				listeners.gameprint(listeners.prefix + "Analyzer " + EnumChatFormatting.GREEN + "Enabled");
 			} else {
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(listeners.prefix + EnumChatFormatting.RED + "Killaura Deactivated"));
+				listeners.toDisplay.remove("analyzer");
+				listeners.gameprint(listeners.prefix + "Analyzer " + EnumChatFormatting.RED + "Disabled");
 			}
 		} else {
-			if (args[0].equalsIgnoreCase("reach")) {
-				reach = Double.valueOf(args[1]);
-				Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(listeners.prefix + EnumChatFormatting.GREEN + "Reach Set To " + EnumChatFormatting.YELLOW + reach));
+			if (args[0].equalsIgnoreCase("delay")) {
+				delay = Integer.valueOf(args[1]);
+				listeners.gameprint(listeners.prefix + "Delay set to " + EnumChatFormatting.YELLOW + delay);
 			}
 		}
+		
+		if (listeners.toDisplay.containsKey("analyzer")) { 
+			listeners.toDisplay.put("analyzer", String.valueOf(delay));
+		}
 	}
-	
 }
