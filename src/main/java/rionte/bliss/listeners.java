@@ -26,11 +26,14 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import rionte.bliss.commands.AnalyzerCommand;
 import rionte.bliss.commands.AnticheatCommand;
+import rionte.bliss.commands.SwapCommand;
 
 public class listeners {
 	
 	public static String cname = "bliss client ";
 	public static int ccolour = 0x84FCFF;
+	public static boolean shoutbind = false;
+	public static String shoutmsg = "";
 	public static String prefix = EnumChatFormatting.DARK_AQUA + "[" +  EnumChatFormatting.AQUA + "B" + EnumChatFormatting.DARK_AQUA + "] " +  EnumChatFormatting.WHITE;
 	public static int totalTicks = 0;
 	static Minecraft mc = Minecraft.getMinecraft();
@@ -146,6 +149,8 @@ public class listeners {
 	public void onKeyPress(InputEvent.KeyInputEvent event) {
 	    if(Keyboard.isKeyDown(Keyboard.KEY_PERIOD)) {
 	    	mc.displayGuiScreen(new GuiChat("."));
+	    } else if (Keyboard.isKeyDown(Keyboard.KEY_COMMA) && shoutbind) {
+	    	mc.thePlayer.sendChatMessage("/shout " + shoutmsg);
 	    }
 	}
 	
