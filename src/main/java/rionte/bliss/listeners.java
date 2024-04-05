@@ -6,8 +6,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import org.lwjgl.input.Keyboard;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -18,6 +21,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import rionte.bliss.commands.AnalyzerCommand;
@@ -25,7 +29,9 @@ import rionte.bliss.commands.AnticheatCommand;
 
 public class listeners {
 	
-	public static String prefix = EnumChatFormatting.DARK_AQUA + "[" +  EnumChatFormatting.AQUA + "R" + EnumChatFormatting.DARK_AQUA + "] " +  EnumChatFormatting.WHITE;
+	public static String cname = "bliss client ";
+	public static int ccolour = 0x84FCFF;
+	public static String prefix = EnumChatFormatting.DARK_AQUA + "[" +  EnumChatFormatting.AQUA + "B" + EnumChatFormatting.DARK_AQUA + "] " +  EnumChatFormatting.WHITE;
 	public static int totalTicks = 0;
 	static Minecraft mc = Minecraft.getMinecraft();
 	
@@ -137,10 +143,17 @@ public class listeners {
 	}
 	
 	@SubscribeEvent
+	public void onKeyPress(InputEvent.KeyInputEvent event) {
+	    if(Keyboard.isKeyDown(Keyboard.KEY_PERIOD)) {
+	    	mc.displayGuiScreen(new GuiChat("."));
+	    }
+	}
+	
+	@SubscribeEvent
 	public void onRenderTick(RenderGameOverlayEvent.Text e) {
-		fr.drawStringWithShadow("bliss client " + EnumChatFormatting.GRAY + "v1.6", 5, 5, 0x84FCFF);
+		fr.drawStringWithShadow(cname + EnumChatFormatting.GRAY + "v1.6", 5, 5, ccolour);
 		for (int i = 0; i < toDisplay.size(); i++) {
-			fr.drawStringWithShadow(toDisplay.keySet().toArray()[i].toString() + " " + EnumChatFormatting.GRAY + toDisplay.get(toDisplay.keySet().toArray()[i].toString()), 4, 16 + 11*i, 0x84FCFF);
+			fr.drawStringWithShadow(toDisplay.keySet().toArray()[i].toString() + " " + EnumChatFormatting.GRAY + toDisplay.get(toDisplay.keySet().toArray()[i].toString()), 4, 16 + 11*i, ccolour);
 		}
 	}
 	
