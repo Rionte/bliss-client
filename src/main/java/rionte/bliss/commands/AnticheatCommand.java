@@ -25,7 +25,7 @@ public class AnticheatCommand extends CommandBase {
 	
 	@Override
 	public String getCommandName() {
-		return "ac";
+		return "anticheat";
 	}
 
 	@Override
