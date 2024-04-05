@@ -29,6 +29,8 @@ import rionte.bliss.commands.AnticheatCommand;
 
 public class listeners {
 	
+	public static String cname = "bliss client ";
+	public static int ccolour = 0x84FCFF;
 	public static String prefix = EnumChatFormatting.DARK_AQUA + "[" +  EnumChatFormatting.AQUA + "B" + EnumChatFormatting.DARK_AQUA + "] " +  EnumChatFormatting.WHITE;
 	public static int totalTicks = 0;
 	static Minecraft mc = Minecraft.getMinecraft();
@@ -149,9 +151,9 @@ public class listeners {
 	
 	@SubscribeEvent
 	public void onRenderTick(RenderGameOverlayEvent.Text e) {
-		fr.drawStringWithShadow("bliss client " + EnumChatFormatting.GRAY + "v1.6", 5, 5, 0x84FCFF);
+		fr.drawStringWithShadow(cname + EnumChatFormatting.GRAY + "v1.6", 5, 5, ccolour);
 		for (int i = 0; i < toDisplay.size(); i++) {
-			fr.drawStringWithShadow(toDisplay.keySet().toArray()[i].toString() + " " + EnumChatFormatting.GRAY + toDisplay.get(toDisplay.keySet().toArray()[i].toString()), 4, 16 + 11*i, 0x84FCFF);
+			fr.drawStringWithShadow(toDisplay.keySet().toArray()[i].toString() + " " + EnumChatFormatting.GRAY + toDisplay.get(toDisplay.keySet().toArray()[i].toString()), 4, 16 + 11*i, ccolour);
 		}
 	}
 	
