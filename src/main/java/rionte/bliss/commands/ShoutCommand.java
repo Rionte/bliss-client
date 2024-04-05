@@ -9,8 +9,9 @@ import rionte.bliss.listeners;
 
 public class ShoutCommand extends CommandBase {
 
-	public static String shoutmsg;
+	public static String shoutmsg = "";
 	static Minecraft mc = Minecraft.getMinecraft();
+	public static boolean shoutbind = false;
 	
 	@Override
 	public int getRequiredPermissionLevel() {
@@ -36,16 +37,16 @@ public class ShoutCommand extends CommandBase {
 	public void processCommand(ICommandSender sender, String[] args) throws CommandException {
 		if (args.length > 0) {
 		    if (args[0].equals("bind")) {
-		        listeners.shoutbind = !listeners.shoutbind;
-		    	listeners.gameprint(listeners.prefix + "Shout bind is now " + (listeners.shoutbind ? EnumChatFormatting.GREEN + "on" : EnumChatFormatting.RED + "off"));
+		        shoutbind = !shoutbind;
+		    	listeners.gameprint(listeners.prefix + "Shout bind is now " + (shoutbind ? EnumChatFormatting.GREEN + "on" : EnumChatFormatting.RED + "off"));
 		    } else {
 		    	for (String s : args) {
-		    		listeners.shoutmsg += s + " ";
+		    		shoutmsg += s + " ";
 		    	}
 		    	listeners.gameprint(listeners.prefix + "Successfully changed shout message");
 		    }
 		} else {
-		    mc.thePlayer.sendChatMessage("/shout " + listeners.shoutmsg);
+		    mc.thePlayer.sendChatMessage("/shout " + shoutmsg);
 		}
 	}
 }

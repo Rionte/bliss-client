@@ -7,7 +7,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.EnumChatFormatting;
 import rionte.bliss.listeners;
 
-public class RenameCommand extends CommandBase {
+public class HudCommand extends CommandBase {
 
 	public static String shoutmsg;
 	static Minecraft mc = Minecraft.getMinecraft();
@@ -49,6 +49,8 @@ public class RenameCommand extends CommandBase {
 		    } else {
 		        listeners.gameprint(listeners.prefix + EnumChatFormatting.RED + "Failed to edit HUD");
 		    }
-		}
+		} else {
+	        listeners.gameprint(listeners.prefix + EnumChatFormatting.RED + "Failed to edit HUD");
+	    }
 	}
 }

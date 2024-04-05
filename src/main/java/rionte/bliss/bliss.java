@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import rionte.bliss.commands.AnalyzerCommand;
 import rionte.bliss.commands.AnticheatCommand;
-import rionte.bliss.commands.RenameCommand;
+import rionte.bliss.commands.HudCommand;
 import rionte.bliss.commands.SaveCommand;
 import rionte.bliss.commands.ShoutCommand;
 import rionte.bliss.commands.SwapCommand;
@@ -36,7 +36,7 @@ public class bliss {
 		ClientCommandHandler.instance.registerCommand(new AnalyzerCommand());
 		ClientCommandHandler.instance.registerCommand(new TargetCommand());
 		ClientCommandHandler.instance.registerCommand(new AnticheatCommand());
-		ClientCommandHandler.instance.registerCommand(new RenameCommand());
+		ClientCommandHandler.instance.registerCommand(new HudCommand());
 		MinecraftForge.EVENT_BUS.register(new listeners());
 	}
 
