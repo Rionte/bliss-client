@@ -6,8 +6,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiChat;
@@ -138,14 +136,14 @@ public class listeners {
 		totalTicks += 1;
 	}
 	
-	@SubscribeEvent
+	/* @SubscribeEvent
 	public void onKeyPress(InputEvent.KeyInputEvent event) {
 	    if(Keyboard.isKeyDown(Keyboard.KEY_PERIOD)) {
 	    	mc.displayGuiScreen(new GuiChat("."));
 	    } else if (Keyboard.isKeyDown(Keyboard.KEY_COMMA) && ShoutCommand.shoutbind) {
 	    	mc.thePlayer.sendChatMessage("/shout " + ShoutCommand.shoutmsg);
 	    }
-	}
+	} */
 	
 	@SubscribeEvent
 	public void onRenderTick(RenderGameOverlayEvent.Text e) {
